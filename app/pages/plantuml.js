@@ -3,10 +3,10 @@ const plantumlEncoder = require("plantuml-encoder");
 function generateSourceDefault (umlCode, pluginOptions, diagType) {
   var imageFormat = pluginOptions.imageFormat || 'img'
   var diagramName = pluginOptions.diagramName || 'uml'
-  var server = pluginOptions.server || 'https://www.plantuml.com/plantuml'
+  var server = pluginOptions.server || 'https://www.plantuml.com/'
   var zippedCode = plantumlEncoder.encode(umlCode)
 
-  return server + '/' + imageFormat + '/' + zippedCode
+  return server + '/' + diagType + '/' +  imageFormat + '/' + zippedCode
 }
 
 export default (md, opts = {}) => {
