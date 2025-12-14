@@ -1,6 +1,6 @@
 const plantumlEncoder = require("plantuml-encoder");
 
-function generateSourceDefault (umlCode, pluginOptions) {
+function generateSourceDefault (umlCode, pluginOptions, diagType) {
   var imageFormat = pluginOptions.imageFormat || 'img'
   var diagramName = pluginOptions.diagramName || 'uml'
   var server = pluginOptions.server || 'https://www.plantuml.com/plantuml'
@@ -14,9 +14,10 @@ export default (md, opts = {}) => {
   md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
     const token = tokens[idx]
     try {
-      if (token.info && token.info.indexOf('plantuml') != -1 ) {
+      if (token.info && (token.info.indexOf('plantuml') != -1  || token.info.indexOf('blockdiag') != -1)) {
         const code = token.content.trim()
-        return `<img src="${generateSourceDefault(code, opts)}" alt="" />`
+        const diag = token.info.indexOf('plantuml') != -1 && 'plantuml' || 'blockdiag'
+        return `<img src="${generateSourceDefault(code, opts, diag)}" alt="" />`
       }
     } catch (e) {
       console.error(`Parse Diagram Error: `, e)
