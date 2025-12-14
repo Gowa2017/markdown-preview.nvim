@@ -13,6 +13,7 @@ export default (md, opts = {}) => {
   const temp = md.renderer.rules.fence.bind(md.renderer.rules)
   md.renderer.rules.fence = (tokens, idx, options, env, slf) => {
     const token = tokens[idx]
+    console.log(token)
     try {
       if (token.info && (token.info.indexOf('plantuml') != -1  || token.info.indexOf('blockdiag') != -1)) {
         const code = token.content.trim()
